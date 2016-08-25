@@ -1,32 +1,36 @@
-package main
+package commands
 
-import "testing"
+import (
+	"consts"
+    "models"
+    "testing"
+)
 
 func TestValidTurnLeftCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 		outX int 
 		outY int
-		outF DIRECTION
+		outF consts.DIRECTION
 	}{
-		{1, 1, NORTH, 1, 1, WEST},
-		{1, 1, EAST, 1, 1, NORTH},
-		{1, 1, SOUTH, 1, 1, EAST},
-		{1, 1, WEST, 1, 1, SOUTH},
+		{1, 1, consts.NORTH, 1, 1, consts.WEST},
+		{1, 1, consts.EAST, 1, 1, consts.NORTH},
+		{1, 1, consts.SOUTH, 1, 1, consts.EAST},
+		{1, 1, consts.WEST, 1, 1, consts.SOUTH},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, LEFT)
+			TurnCommand(&robot, consts.LEFT)
 			
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
@@ -51,27 +55,27 @@ func TestValidTurnRightCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 		outX int 
 		outY int
-		outF DIRECTION
+		outF consts.DIRECTION
 	}{
-		{1, 1, NORTH, 1, 1, EAST},
-		{1, 1, EAST, 1, 1, SOUTH},
-		{1, 1, SOUTH, 1, 1, WEST},
-		{1, 1, WEST, 1, 1, NORTH},
+		{1, 1, consts.NORTH, 1, 1, consts.EAST},
+		{1, 1, consts.EAST, 1, 1, consts.SOUTH},
+		{1, 1, consts.SOUTH, 1, 1, consts.WEST},
+		{1, 1, consts.WEST, 1, 1, consts.NORTH},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, RIGHT)
+			TurnCommand(&robot, consts.RIGHT)
 			
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
@@ -96,34 +100,34 @@ func TestValid4TimesTurnCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 		outX int 
 		outY int
-		outF DIRECTION
+		outF consts.DIRECTION
 	}{
-		{1, 1, NORTH, 1, 1, NORTH},
-		{1, 1, EAST, 1, 1, EAST},
-		{1, 1, SOUTH, 1, 1, SOUTH},
-		{1, 1, WEST, 1, 1, WEST},
+		{1, 1, consts.NORTH, 1, 1, consts.NORTH},
+		{1, 1, consts.EAST, 1, 1, consts.EAST},
+		{1, 1, consts.SOUTH, 1, 1, consts.SOUTH},
+		{1, 1, consts.WEST, 1, 1, consts.WEST},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, RIGHT)
-			TurnCommand(&robot, RIGHT)
-			TurnCommand(&robot, RIGHT)
-			TurnCommand(&robot, RIGHT)
-			TurnCommand(&robot, LEFT)
-			TurnCommand(&robot, LEFT)
-			TurnCommand(&robot, LEFT)
-			TurnCommand(&robot, LEFT)
+			TurnCommand(&robot, consts.RIGHT)
+			TurnCommand(&robot, consts.RIGHT)
+			TurnCommand(&robot, consts.RIGHT)
+			TurnCommand(&robot, consts.RIGHT)
+			TurnCommand(&robot, consts.LEFT)
+			TurnCommand(&robot, consts.LEFT)
+			TurnCommand(&robot, consts.LEFT)
+			TurnCommand(&robot, consts.LEFT)
 			
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
@@ -148,25 +152,25 @@ func TestInvalidRobotTurnCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 	}{
-		{-1, 1, NORTH},
-		{1, -1, EAST},
-		{-1,-1, SOUTH},
+		{-1, 1, consts.NORTH},
+		{1, -1, consts.EAST},
+		{-1,-1, consts.SOUTH},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, RIGHT)
-			TurnCommand(&robot, RIGHT)
-			TurnCommand(&robot, LEFT)
+			TurnCommand(&robot, consts.RIGHT)
+			TurnCommand(&robot, consts.RIGHT)
+			TurnCommand(&robot, consts.LEFT)
 			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")
@@ -176,7 +180,7 @@ func TestInvalidRobotTurnCommand(t *testing.T) {
 				t.Errorf("should return valid Y")
 			}
 			
-			if robot.Direction != UNKNOWN_DIRECTION {
+			if robot.Direction != consts.UNKNOWN_DIRECTION {
 				t.Errorf("should return valid Direction")
 			}
 			

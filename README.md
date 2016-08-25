@@ -1,7 +1,11 @@
-# Toy Robot - GO Lang
+# Toy Robot
 
-## Implementation in another language
-* [C# .NET](https://github.com/Raymondsquared/toy_robot)
+### Implementations
+
+Language  | Link | Priority
+--------- | ---- | -----------
+C# .NET  | [Link](https://github.com/Raymondsquared/toy_robot/) | Primary / Master
+Go   | [Link](https://github.com/Raymondsquared/GO-Toy_Robot) | Secondary / Backup
 
 ## Description
 

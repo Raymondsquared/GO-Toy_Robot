@@ -1,26 +1,30 @@
-package main
+package commands
 
-import "testing"
+import (
+	"consts"
+    "models"
+    "testing"
+)
 
 func TestValidReportCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 	}{
-		{1, 1, NORTH},
-		{1, 2, EAST},
-		{2, 1, SOUTH},
-		{3, 3, WEST},
+		{1, 1, consts.NORTH},
+		{1, 2, consts.EAST},
+		{2, 1, consts.SOUTH},
+		{3, 3, consts.WEST},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
 			ReportCommand(&robot)
@@ -48,20 +52,20 @@ func TestInvalidRobotReportCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 	}{
-		{-1, 1, NORTH},
-		{1, -1, EAST},
-		{-1,-1, SOUTH},
+		{-1, 1, consts.NORTH},
+		{1, -1, consts.EAST},
+		{-1,-1, consts.SOUTH},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
 			ReportCommand(&robot);
@@ -74,7 +78,7 @@ func TestInvalidRobotReportCommand(t *testing.T) {
 				t.Errorf("should return valid Y")
 			}
 			
-			if robot.Direction != UNKNOWN_DIRECTION {
+			if robot.Direction != consts.UNKNOWN_DIRECTION {
 				t.Errorf("should return valid Direction")
 			}
 			

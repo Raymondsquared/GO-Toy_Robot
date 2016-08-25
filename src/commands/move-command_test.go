@@ -1,29 +1,33 @@
-package main
+package commands
 
-import "testing"
+import (
+    "consts"
+    "models"
+    "testing"
+)
 
 func TestValidMoveCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 		outX int 
 		outY int
-		outF DIRECTION
+		outF consts.DIRECTION
 	}{
-		{1, 1, NORTH, 1, 2, NORTH},
-		{1, 1, EAST, 2, 1, EAST},
-		{1, 1, SOUTH, 1, 0, SOUTH},
-		{1, 1, WEST, 0, 1, WEST},
+		{1, 1, consts.NORTH, 1, 2, consts.NORTH},
+		{1, 1, consts.EAST, 2, 1, consts.EAST},
+		{1, 1, consts.SOUTH, 1, 0, consts.SOUTH},
+		{1, 1, consts.WEST, 0, 1, consts.WEST},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
 			MoveCommand(&robot)
@@ -51,24 +55,24 @@ func TestOutOfBoundMoveCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 		outX int 
 		outY int
-		outF DIRECTION
+		outF consts.DIRECTION
 	}{
-		{1, 1, NORTH, 1, 5, NORTH},
-		{1, 1, EAST, 5, 1, EAST},
-		{1, 1, SOUTH, 1, 0, SOUTH},
-		{1, 1, WEST, 0, 1, WEST},
+		{1, 1, consts.NORTH, 1, 5, consts.NORTH},
+		{1, 1, consts.EAST, 5, 1, consts.EAST},
+		{1, 1, consts.SOUTH, 1, 0, consts.SOUTH},
+		{1, 1, consts.WEST, 0, 1, consts.WEST},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
 			MoveCommand(&robot)
@@ -101,20 +105,20 @@ func TestNotPlacedRobotMoveCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
 		inY int
-		inF DIRECTION
+		inF consts.DIRECTION
 	}{
-		{-1, 1, NORTH},
-		{1, -2, EAST},
-		{-3, -3, SOUTH},
+		{-1, 1, consts.NORTH},
+		{1, -2, consts.EAST},
+		{-3, -3, consts.SOUTH},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
 			MoveCommand(&robot)
@@ -129,7 +133,7 @@ func TestNotPlacedRobotMoveCommand(t *testing.T) {
 				t.Errorf("should return valid Y")
 			}
 			
-			if robot.Direction != UNKNOWN_DIRECTION {
+			if robot.Direction != consts.UNKNOWN_DIRECTION {
 				t.Errorf("should return valid Direction")
 			}
 

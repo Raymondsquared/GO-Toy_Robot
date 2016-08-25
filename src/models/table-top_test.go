@@ -1,6 +1,8 @@
-package main
+package models
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestValidTableTop(t *testing.T) {
 	cases := []struct {

@@ -1,7 +1,12 @@
-package main
+package models
 
-import "errors"
+import (
+  "errors"
+)
 
+///<summary>
+/// Concrete implementation of Map where a receiver is going to be placed
+///</summary>
 type TableTop struct {
   Width, Length int
 }

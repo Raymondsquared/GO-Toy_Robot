@@ -1,24 +1,28 @@
-package main
+package commands
 
-import "testing"
+import (
+    "consts"
+    "models"
+    "testing"
+)
 
 func TestValidPlaceCommand(t *testing.T) {
 	cases := []struct {
 		inX, inY int
-		intF DIRECTION
+		intF consts.DIRECTION
 	}{
-		{0, 0, NORTH},
-		{1, 1, SOUTH},
-		{5, 5, WEST},
+		{0, 0, consts.NORTH},
+		{1, 1, consts.SOUTH},
+		{5, 5, consts.WEST},
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
 			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.intF)
 			
@@ -51,14 +55,14 @@ func TestNegativeXYForPlaceCommand(t *testing.T) {
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(5, 5)
+		tableTop, errTableTop := models.NewTableTop(5, 5)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, SOUTH)
+			PlaceCommand(&robot, tableTop, c.inX, c.inY, consts.SOUTH)
 			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")
@@ -68,7 +72,7 @@ func TestNegativeXYForPlaceCommand(t *testing.T) {
 				t.Errorf("should return valid Y")
 			}
 			
-			if robot.Direction != UNKNOWN_DIRECTION {
+			if robot.Direction != consts.UNKNOWN_DIRECTION {
 				t.Errorf("should return valid Direction")
 			}
 			
@@ -90,14 +94,14 @@ func TestOutOfBoundForPlaceCommand(t *testing.T) {
 	}
 	for _, c := range cases {
 		
-		tableTop, errTableTop := NewTableTop(2, 2)
+		tableTop, errTableTop := models.NewTableTop(2, 2)
 		
 		if errTableTop != nil {
 			t.Errorf("cant throw error on creating table")
 		} else {
-			robot := Robot{}
+			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, SOUTH)
+			PlaceCommand(&robot, tableTop, c.inX, c.inY, consts.SOUTH)
 			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")
@@ -107,7 +111,7 @@ func TestOutOfBoundForPlaceCommand(t *testing.T) {
 				t.Errorf("should return valid Y")
 			}
 			
-			if robot.Direction != UNKNOWN_DIRECTION {
+			if robot.Direction != consts.UNKNOWN_DIRECTION {
 				t.Errorf("should return valid Direction")
 			}
 			
