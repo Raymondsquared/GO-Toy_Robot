@@ -5,6 +5,7 @@ import (
     "models"
     "strings"
     "strconv"
+    "factories"
     "commands"
 )
 
@@ -28,8 +29,10 @@ func ProcessUserInput(inputTexts string, robot *models.Robot, tableTop *models.T
 	var isValid = false
 	var shouldExit = false
 	
-	var command = strings.Replace(inputTexts, "\n", "", -1);
-			
+	var command = strings.Replace(inputTexts, "\n", "", -1)
+	
+	var input = models.Input {}
+	
 	// PLACE X,Y,F 
 	if strings.HasPrefix(command, "PLACE") {
 		
@@ -60,7 +63,11 @@ func ProcessUserInput(inputTexts string, robot *models.Robot, tableTop *models.T
 				}
 				
 				if direction != consts.UNKNOWN_DIRECTION && errX == nil && errY == nil {
-					commands.PlaceCommand(robot, tableTop, x, y, direction)
+					input.Command = consts.PLACE_COMMAND
+					input.TableTop = tableTop
+					input.X = x
+					input.Y = y
+					input.Direction = direction
 					isValid = true
 				}
 			}
@@ -68,21 +75,28 @@ func ProcessUserInput(inputTexts string, robot *models.Robot, tableTop *models.T
 	} else { //MOVE, LEFT, RIGHT, REPORT and EXIT
 		switch command {
 			case "MOVE":
-				commands.MoveCommand(robot)
+				input.Command = consts.MOVE_COMMAND
 				isValid = true
 			case "LEFT":
-				commands.TurnCommand(robot, consts.LEFT)
+				input.Command = consts.LEFT_COMMAND
 				isValid = true
 			case "RIGHT":
-				commands.TurnCommand(robot, consts.RIGHT)
+				input.Command = consts.RIGHT_COMMAND
 				isValid = true
 			case "REPORT":
-				commands.ReportCommand(robot)
+				input.Command = consts.REPORT_COMMAND
 				isValid = true
 			case "EXIT":
 				shouldExit = true
 			default:
 		}	
+	}
+	
+	cmd := factories.CommandFactory(robot, input)
+	
+	if cmd != nil {
+		var inv = commands.NewInvoker(cmd)
+		inv.Invoke()
 	}
 	
 	return isValid, shouldExit

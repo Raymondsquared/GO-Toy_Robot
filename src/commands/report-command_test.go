@@ -26,8 +26,11 @@ func TestValidReportCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			ReportCommand(&robot)
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+			
+			var rr = NewReportCommand(&robot)
+			rr.Execute()
 			
 			if robot.X != c.inX {
 				t.Errorf("should return valid X")
@@ -67,8 +70,11 @@ func TestInvalidRobotReportCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			ReportCommand(&robot);
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+			
+			var rr = NewReportCommand(&robot);
+			rr.Execute()
 			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")

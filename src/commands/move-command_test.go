@@ -29,8 +29,11 @@ func TestValidMoveCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			MoveCommand(&robot)
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+			
+			var mr = NewMoveCommand(&robot)
+			mr.Execute()
 			
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
@@ -74,13 +77,17 @@ func TestOutOfBoundMoveCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			MoveCommand(&robot)
-			MoveCommand(&robot)
-			MoveCommand(&robot)
-			MoveCommand(&robot)
-			MoveCommand(&robot)
-			MoveCommand(&robot)
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+			
+			var mr = NewMoveCommand(&robot)
+			mr.Execute()
+			mr.Execute()
+			mr.Execute()
+			mr.Execute()
+			mr.Execute()
+			mr.Execute()
+			mr.Execute()
 			
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
@@ -120,11 +127,14 @@ func TestNotPlacedRobotMoveCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			MoveCommand(&robot)
-			MoveCommand(&robot)
-			MoveCommand(&robot)
-
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+			
+			var mr = NewMoveCommand(&robot)
+			mr.Execute()
+			mr.Execute()
+			mr.Execute()
+			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")
 			}

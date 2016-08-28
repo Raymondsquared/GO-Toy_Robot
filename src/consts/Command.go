@@ -1,0 +1,13 @@
+package consts
+
+type COMMAND int64
+
+const ( 
+  UNKNOWN_COMMAND COMMAND = iota
+  PLACE_COMMAND
+  MOVE_COMMAND
+  LEFT_COMMAND
+  RIGHT_COMMAND
+  REPORT_COMMAND
+)
+

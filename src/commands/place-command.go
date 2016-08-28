@@ -13,28 +13,40 @@ import (
 /// PLACE will put the toy robot on the table in position X,Y and facing NORTH, SOUTH, EAST or WEST.
 /// The origin (0,0) can be considered to be the SOUTH WEST most corner.
 ///</remarks>
-func PlaceCommand(robot *models.Robot, tableTop *models.TableTop, x int, y int, direction consts.DIRECTION) { 
+type PlaceCommand struct {
+    robot *models.Robot
     
+    tableTop *models.TableTop
+    x int
+    y int
+    direction consts.DIRECTION
+}
+
+func NewPlaceCommand(robot *models.Robot, tableTop *models.TableTop, x int, y int, direction consts.DIRECTION) (*PlaceCommand) {
+	return &PlaceCommand{ robot, tableTop, x, y, direction }
+} 
+
+func (this *PlaceCommand) Execute()  {
     var isValid = true;
     
-    if tableTop == nil {
+    if this.tableTop == nil {
         isValid = false;
     }
     
-    if x < 0 || y < 0 {
+    if this.x < 0 || this.y < 0 {
         isValid = false;
     }
     
-    if x > tableTop.Width || y > tableTop.Length {
+    if this.x > this.tableTop.Width || this.y > this.tableTop.Length {
         isValid = false;
     }
     
     if isValid == true {
-        robot.IsValid = isValid
-        robot.TableTop = *tableTop
-        robot.X = x
-        robot.Y = y
-        robot.Direction = direction
+        this.robot.IsValid = isValid
+        this.robot.TableTop = *this.tableTop
+        this.robot.X = this.x
+        this.robot.Y = this.y
+        this.robot.Direction = this.direction
     }
 
 }

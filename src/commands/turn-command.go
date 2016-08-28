@@ -12,36 +12,45 @@ import (
 /// Handling all turning commmands (left / right), send the command to the receiver to do some actions
 /// LEFT and RIGHT will rotate the robot 90 degrees in the specified direction without changing the position of the robot.
 ///</remarks>
-func TurnCommand(robot *models.Robot, turn consts.TURN) { 
-    if robot.IsValid == true {
-        switch robot.Direction {
+type TurnCommand struct {
+    robot *models.Robot
+    turn consts.TURN
+}
+
+func NewTurnCommand(robot *models.Robot, turn consts.TURN) *TurnCommand {
+	return &TurnCommand{ robot, turn }
+} 
+
+func (this *TurnCommand) Execute()  {
+    if this.robot.IsValid == true {
+        switch this.robot.Direction {
             case consts.NORTH:
-                if turn == consts.LEFT {
-                    robot.Direction = consts.WEST
+                if this.turn == consts.LEFT {
+                    this.robot.Direction = consts.WEST
                 }
-                if turn == consts.RIGHT {
-                    robot.Direction = consts.EAST
+                if this.turn == consts.RIGHT {
+                    this.robot.Direction = consts.EAST
                 }
             case consts.EAST:
-                if turn == consts.LEFT {
-                    robot.Direction = consts.NORTH
+                if this.turn == consts.LEFT {
+                    this.robot.Direction = consts.NORTH
                 }
-                if turn == consts.RIGHT {
-                    robot.Direction = consts.SOUTH
+                if this.turn == consts.RIGHT {
+                    this.robot.Direction = consts.SOUTH
                 }
             case consts.SOUTH:
-                if turn == consts.LEFT {
-                    robot.Direction = consts.EAST
+                if this.turn == consts.LEFT {
+                    this.robot.Direction = consts.EAST
                 }
-                if turn == consts.RIGHT {
-                    robot.Direction = consts.WEST
+                if this.turn == consts.RIGHT {
+                    this.robot.Direction = consts.WEST
                 }
             case consts.WEST:
-                if turn == consts.LEFT {
-                    robot.Direction = consts.SOUTH
+                if this.turn == consts.LEFT {
+                    this.robot.Direction = consts.SOUTH
                 }
-                if turn == consts.RIGHT {
-                    robot.Direction = consts.NORTH
+                if this.turn == consts.RIGHT {
+                    this.robot.Direction = consts.NORTH
                 }
         }
     }

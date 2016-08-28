@@ -6,6 +6,7 @@ import (
     "testing"
 )
 
+
 func TestValidTurnLeftCommand(t *testing.T) {
 	cases := []struct {
 		inX int 
@@ -29,8 +30,11 @@ func TestValidTurnLeftCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, consts.LEFT)
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+			
+			var ltr = NewTurnCommand(&robot, consts.LEFT)
+			ltr.Execute()
 			
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
@@ -74,9 +78,12 @@ func TestValidTurnRightCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, consts.RIGHT)
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
 			
+			var rtr = NewTurnCommand(&robot, consts.RIGHT)
+			rtr.Execute()
+		
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
 			}
@@ -119,16 +126,21 @@ func TestValid4TimesTurnCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, consts.RIGHT)
-			TurnCommand(&robot, consts.RIGHT)
-			TurnCommand(&robot, consts.RIGHT)
-			TurnCommand(&robot, consts.RIGHT)
-			TurnCommand(&robot, consts.LEFT)
-			TurnCommand(&robot, consts.LEFT)
-			TurnCommand(&robot, consts.LEFT)
-			TurnCommand(&robot, consts.LEFT)
-			
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+		
+			var rtr = NewTurnCommand(&robot, consts.RIGHT)
+			rtr.Execute()
+			rtr.Execute()
+			rtr.Execute()
+			rtr.Execute()
+		
+			var ltr = NewTurnCommand(&robot, consts.LEFT)
+			ltr.Execute()
+			ltr.Execute()
+			ltr.Execute()
+			ltr.Execute()
+		
 			if robot.X != c.outX {
 				t.Errorf("should return valid X")
 			}
@@ -167,10 +179,16 @@ func TestInvalidRobotTurnCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
-			TurnCommand(&robot, consts.RIGHT)
-			TurnCommand(&robot, consts.RIGHT)
-			TurnCommand(&robot, consts.LEFT)
+			var pr = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.inF)
+			pr.Execute()
+			
+			var rtr = NewTurnCommand(&robot, consts.RIGHT)
+			rtr.Execute()
+			rtr.Execute()
+		
+			var ltr = NewTurnCommand(&robot, consts.LEFT)
+			ltr.Execute()
+		
 			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")

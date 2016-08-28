@@ -24,7 +24,8 @@ func TestValidPlaceCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, c.intF)
+			var r = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, c.intF)
+			r.Execute()
 			
 			if robot.X != c.inX {
 				t.Errorf("should return valid X")
@@ -62,7 +63,8 @@ func TestNegativeXYForPlaceCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, consts.SOUTH)
+			var r = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, consts.SOUTH)
+			r.Execute()
 			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")
@@ -101,7 +103,8 @@ func TestOutOfBoundForPlaceCommand(t *testing.T) {
 		} else {
 			robot := models.Robot{}
 		    
-			PlaceCommand(&robot, tableTop, c.inX, c.inY, consts.SOUTH)
+			var r = NewPlaceCommand(&robot, tableTop, c.inX, c.inY, consts.SOUTH)
+			r.Execute()
 			
 			if robot.X != 0 {
 				t.Errorf("should return valid X")
